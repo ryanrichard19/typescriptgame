@@ -6,7 +6,7 @@ import { gl } from './gl';
  * @export
  * @class Shader
  */
-export default class Shader {
+export class Shader {
   private _name: string;
   private _program: WebGLProgram;
   private _attributes: { [name: string]: number } = {};

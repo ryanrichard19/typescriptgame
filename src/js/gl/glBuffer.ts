@@ -38,7 +38,7 @@ export class AttributeInfo {
  * @export
  * @class GLBuffer
  */
-export default class GLBuffer {
+export class GLBuffer {
   private _hasAttributeLocation: boolean = false;
 
   private _elementSize: number;

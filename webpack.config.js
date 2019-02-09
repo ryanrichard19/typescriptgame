@@ -6,6 +6,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname+ '/dist'),
 		filename: "bundle.js",
+		publicPath: '/',
 	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js']
@@ -31,11 +32,25 @@ module.exports = {
 				]
 			},
 			{
-				test: /\.mp3$/,
+				test: /\.(png|jpg|mp3)$/,
 				exclude: /node_modules/,
 				use: [
-					{ loader: 'file-loader' }
+					{ 
+						loader: 'file-loader',
+						options: {
+							outputPath: 'images',
+						  },
+					}
 				]
+			},
+			{
+				test: /\.(png|jpg)$/,
+				exclude: /node_modules/,
+				loader: 'url-loader',
+				options: {
+					name: './../images/[name].[ext]',
+					publicPath: './images/'
+				}
 			}
 		]
 	},
@@ -43,5 +58,9 @@ module.exports = {
     new HtmlWebpackPlugin({
 			template: './src/index.html'
 		})
-  ],
+	],
+	devServer: {  // configuration for webpack-dev-server
+		contentBase: './src/public',  //source of static assets
+		port: 8080,
+	} 
 }

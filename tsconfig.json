@@ -2,10 +2,12 @@
 	"compilerOptions": {
 		"outDir": "./dist",
 		"sourceMap": true,
-		"noImplicitAny": true,
 		"module": "commonjs",
 		"target": "es6",
-		"allowJs": true
+		"allowJs": true,
+		"noImplicitAny": true,
+		"baseUrl": ".", 
+		"paths": { "@/*":["src/*"] }
 	},
 	"exclude": [
 		"node_modules"
@@ -14,3 +16,4 @@
 		"./src/js/app.ts"
 	]
 }
+

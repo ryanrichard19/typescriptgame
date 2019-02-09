@@ -1,7 +1,7 @@
 declare var require: any;
 require('../css/main.css');
 
-import Engine from './engine';
+import { Engine } from './engine';
 // The main entry point to the application
 class App {
 	public _engine: Engine;
@@ -17,7 +17,6 @@ class App {
 
 	private gameLoop(): void {
 		requestAnimationFrame(this.gameLoop.bind(this));
-
 		this._engine.start();
 	}
 }
@@ -32,7 +31,5 @@ window.onload = () => {
 
 window.onresize = () => {
     app._engine.resize();
-    
-
 }  
 

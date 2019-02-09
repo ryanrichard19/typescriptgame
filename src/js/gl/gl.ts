@@ -5,7 +5,7 @@ export let gl: WebGLRenderingContext;
 /**
  * Responsible for setting up a WebGL rendering context
  */
-export default class GLUtilities {
+export class GLUtilities {
   /**
    * Initializes WEBGL, potentially using the canvas with an assigned id mathing the provided if it is defined
    * @param elementId The id of teh element to search for
