@@ -1,4 +1,4 @@
-import { Texture } from "./textures";
+import { Texture } from "./texture";
 
 class TextureReferenceNode {
     public texture: Texture;

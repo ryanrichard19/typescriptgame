@@ -6,7 +6,7 @@ import { gl } from './gl';
  * @export
  * @class Shader
  */
-export class Shader {
+export abstract class Shader {
   private _name: string;
   private _program: WebGLProgram;
   private _attributes: { [name: string]: number } = {};
@@ -15,22 +15,9 @@ export class Shader {
   /**
    * Creates a new shader.
    * @param name The name of this shader
-   * @param vertexSource The source of the vertex shader
-   * @param fragmentSource The source of the fragment shader
    */
-  public constructor(
-    name: string,
-    vertexSource: string,
-    fragmentSource: string
-  ) {
+  public constructor( name: string ) {
     this._name = name;
-    let vertexShader = this.loadShader(vertexSource, gl.VERTEX_SHADER);
-    let fragmentShader = this.loadShader(fragmentSource, gl.FRAGMENT_SHADER);
-
-    this.createProgram(vertexShader, fragmentShader);
-
-    this.detectAttributes();
-    this.detectUniforms();
   }
 
   /**
@@ -87,6 +74,16 @@ export class Shader {
     return this._uniforms[name];
   }
 
+  protected load(vertexSource: string, fragmentSource: string): void {
+    let vertexShader = this.loadShader(vertexSource, gl.VERTEX_SHADER);
+    let fragmentShader = this.loadShader(fragmentSource, gl.FRAGMENT_SHADER);
+
+    this.createProgram(vertexShader, fragmentShader);
+
+    this.detectAttributes();
+    this.detectUniforms();
+  }
+
   private loadShader(source: string, shaderType: number): WebGLShader {
     let shader: WebGLShader = gl.createShader(shaderType);
 
@@ -126,27 +123,19 @@ export class Shader {
         break;
       }
 
-      this._attributes[info.name] = gl.getAttribLocation(
-        this._program,
-        info.name
-      );
+      this._attributes[info.name] = gl.getAttribLocation( this._program, info.name);
     }
   }
 
-  private detectUniforms(): void {
-    let uniformCount = gl.getProgramParameter(
-      this._program,
-      gl.ACTIVE_UNIFORMS
-    );
+  private detectUniforms(): void {  
+    let uniformCount = gl.getProgramParameter( this._program, gl.ACTIVE_UNIFORMS );
+
     for (let i = 0; i < uniformCount; i++) {
       let info: WebGLActiveInfo = gl.getActiveUniform(this._program, i);
       if (!info) {
         break;
       }
-      this._uniforms[info.name] = gl.getUniformLocation(
-        this._program,
-        info.name
-      );
+      this._uniforms[info.name] = gl.getUniformLocation(this._program, info.name);
     }
   }
 }
